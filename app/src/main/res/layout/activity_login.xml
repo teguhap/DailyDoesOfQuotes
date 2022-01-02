@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:gravity="center"
+    tools:context=".LoginActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:elevation="5dp"
+        app:cardElevation="10dp"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="468dp"
+            android:gravity=""
+            android:background="#3893FF"
+            >
+            <TextView
+                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/white"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textSize="15sp"
+                android:layout_marginTop="60dp"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/etUsernameLogin"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_et_login"/>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textSize="15sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/etPasswordLogin"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="12dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_et_login"/>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Login"
+                android:backgroundTint="#3858FF"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"/>
+
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="35dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/montserrat"
+                android:text="Register"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
