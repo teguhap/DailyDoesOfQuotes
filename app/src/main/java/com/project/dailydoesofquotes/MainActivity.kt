@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         tvLogo.text = "\"Q"
 
-        val intent = Intent(this,LoginActivity :: class.java)
+        val intent = Intent(this,ActivityUtama:: class.java)
         Handler().postDelayed({startActivity(intent)
                               finish()
                               },2000L)

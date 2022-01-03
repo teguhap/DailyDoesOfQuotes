@@ -8,6 +8,34 @@
     >
 
     <LinearLayout
+        android:id="@+id/llRegistAdd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:padding="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Yuk Regist Dulu"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btnRegistAdd"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#3893FF"
+        android:text="Regist" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMakeQuotes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -22,8 +50,7 @@
             android:text="Make Your Quotes"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            />
 
         <EditText
             android:id="@+id/etQuotes"
@@ -43,14 +70,6 @@
             android:hint="Insert Your Name"
             android:textAlignment="center" />
 
-        <EditText
-            android:id="@+id/etTags"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_et_quotes"
-            android:hint="Insert Tags"
-            android:textAlignment="center" />
 
         <Button
             android:id="@+id/btnPost"

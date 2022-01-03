@@ -4,17 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".HomeFragment">
         <item
-            android:id="@+id/delete"
-            app:showAsAction="always"
-            android:title="Delete" />
-        <item
             android:id="@+id/update"
             app:showAsAction="ifRoom"
-            android:title="Update" />
-
-
-
-
-
-
+            android:title="Details" />
 </menu>

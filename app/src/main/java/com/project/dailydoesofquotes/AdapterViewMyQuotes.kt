@@ -1,18 +1,30 @@
 package com.project.dailydoesofquotes
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import org.json.JSONException
+import org.json.JSONObject
+import java.util.HashMap
 
 
 class AdapterViewMyQuotes(val listData : List<ListQuotes>) : RecyclerView.Adapter<AdapterViewMyQuotes.ViewHolderView>() {
-
     inner class ViewHolderView(itemView : View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderView {
@@ -27,10 +39,12 @@ class AdapterViewMyQuotes(val listData : List<ListQuotes>) : RecyclerView.Adapte
             val tvAuthor = findViewById<TextView>(R.id.textAuthor)
             val cvQuotes = findViewById<CardView>(R.id.cvListMyQuotes)
 
-            val item = listData[position]
-            val quotes = item.quotes
+
+            val currentItem = listData[position]
+            val quotes = currentItem.quotes
             tvNama.text = "\"$quotes\""
-            tvAuthor.text = item.author
+            tvAuthor.text = currentItem.author
+
 
             cvQuotes.setOnClickListener {
                 val popup = PopupMenu(context,it)
@@ -38,11 +52,13 @@ class AdapterViewMyQuotes(val listData : List<ListQuotes>) : RecyclerView.Adapte
 
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
-                        R.id.delete -> {
-                            Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show()
-                        }
                         R.id.update -> {
-                            Toast.makeText(context, "Item Updated", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(context,EditQuotes :: class.java)
+                            intent.putExtra("id",currentItem.id)
+                            intent.putExtra("quote",quotes)
+                            intent.putExtra("author",currentItem.author)
+                            startActivity(context,intent, Bundle.EMPTY)
+                            (context as Activity).finish()
                         }
                     }
                     true
@@ -57,6 +73,9 @@ class AdapterViewMyQuotes(val listData : List<ListQuotes>) : RecyclerView.Adapte
 
         return  listData.size
     }
+
+
+
 
 
 }

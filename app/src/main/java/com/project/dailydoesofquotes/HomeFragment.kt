@@ -10,6 +10,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -33,29 +38,15 @@ class HomeFragment : Fragment() {
 
 
 
-        listQuotes.add(ListQuotes("Anjing Lah","Ranti"))
-        listQuotes.add(ListQuotes("Haloooooo","Ranti"))
-        listQuotes.add(ListQuotes("Manusia Kuat","Jason"))
-        listQuotes.add(ListQuotes("Ga jelassss","Tulus"))
-        listQuotes.add(ListQuotes("Hai Kafiiir","JAson"))
-        listQuotes.add(ListQuotes("Hai Kafiiir","JAson"))
-        listQuotes.add(ListQuotes("Hai Kafiiir","JAson"))
-        listQuotes.add(ListQuotes("Hai Kafiiir","JAson"))
+        getQuotes(listQuotes,listDisplay,recyclerViewHome)
 
-
-        listDisplay.addAll(listQuotes)
-        listQuotes.forEach {
-            Log.d("hasil",it.quotes)
-        }
-
-        recyclerViewHome.adapter = AdapterViewQuotes(listDisplay)
-        recyclerViewHome.layoutManager = LinearLayoutManager(context)
-        recyclerViewHome.setHasFixedSize(true)
 
         toolbar.setOnMenuItemClickListener {item->
             when(item.itemId){
                 R.id.refresh -> {
-                    Toast.makeText(context,"Referesh",Toast.LENGTH_LONG).show()
+                    listQuotes.clear()
+                    listDisplay.clear()
+                    getQuotes(listQuotes,listDisplay,recyclerViewHome)
                     true
                 }
                 R.id.search -> {
@@ -65,6 +56,10 @@ class HomeFragment : Fragment() {
                         @SuppressLint("NotifyDataSetChanged")
                         override fun onQueryTextSubmit(query: String?): Boolean {
                             listDisplay.clear()
+                            val search = query?.lowercase(Locale.getDefault())
+                            if (search != null) {
+                                getQuotesSearch(search,listQuotes,listDisplay,recyclerViewHome)
+                            }
                             recyclerViewHome.adapter!!.notifyDataSetChanged()
                             return false
                         }
@@ -74,6 +69,7 @@ class HomeFragment : Fragment() {
                             if(newText!!.isNotEmpty()){
                                 listDisplay.clear()
                                 val search = newText.lowercase(Locale.getDefault())
+                                getQuotesSearch(search,listQuotes,listDisplay,recyclerViewHome)
                                 listQuotes.forEach {
                                     if(it.quotes.lowercase(Locale.getDefault()).contains(search)
                                         ||it.author.lowercase(Locale.getDefault()).contains(search)){
@@ -82,6 +78,7 @@ class HomeFragment : Fragment() {
                                     recyclerViewHome.adapter!!.notifyDataSetChanged()
                                 }
                             }else{
+                                getQuotes(listQuotes,listDisplay,recyclerViewHome)
                                 listDisplay.clear()
                                 listDisplay.addAll(listQuotes)
                                 recyclerViewHome.adapter!!.notifyDataSetChanged()
@@ -99,6 +96,69 @@ class HomeFragment : Fragment() {
             }
         }
         return view
+    }
+
+
+    fun getQuotes(listQuotes : MutableList<ListQuotes>, displayListQuotes: MutableList<ListQuotes>,rvQuotes: RecyclerView){
+        val queue = Volley.newRequestQueue(context)
+        val url = "https://bod-thinker.000webhostapp.com/api/quotes?action=get"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET,url,
+            {
+                    response ->
+
+                val strRespon = response.toString()
+                val jsonObject = JSONObject(strRespon)
+                val jsonArray: JSONArray = jsonObject.getJSONArray("data")
+                listQuotes.clear()
+                displayListQuotes.clear()
+                for(i in 0 until jsonArray.length()){
+                    val jsonInner : JSONObject = jsonArray.getJSONObject(i)
+                    val id = jsonInner.get("id").toString()
+                    val quote = jsonInner.get("quote").toString()
+                    val author =  jsonInner.get("author").toString()
+                    listQuotes.add(ListQuotes(id,quote,author))
+                }
+
+                displayListQuotes.addAll(listQuotes)
+                val adapter  = AdapterViewQuotes(displayListQuotes)
+                rvQuotes.adapter = adapter
+                rvQuotes.layoutManager = LinearLayoutManager(context)
+                rvQuotes.setHasFixedSize(true)
+            }, {})
+        queue.add(stringRequest)
+    }
+
+    fun getQuotesSearch(text:String,listQuotes : MutableList<ListQuotes>, displayListQuotes: MutableList<ListQuotes>,rvQuotes: RecyclerView){
+        val queue = Volley.newRequestQueue(context)
+        val url = "https://bod-thinker.000webhostapp.com/api/quotes?action=find&search=$text"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET,url,
+            {
+                    response ->
+
+                val strRespon = response.toString()
+                val jsonObject = JSONObject(strRespon)
+                val jsonArray: JSONArray = jsonObject.getJSONArray("data")
+                listQuotes.clear()
+                displayListQuotes.clear()
+                for(i in 0 until jsonArray.length()){
+                    val jsonInner : JSONObject = jsonArray.getJSONObject(i)
+                    val id = jsonInner.get("id").toString()
+                    val quote = jsonInner.get("quote").toString()
+                    val author =  jsonInner.get("author").toString()
+                    listQuotes.add(ListQuotes(id,quote,author))
+                }
+
+                displayListQuotes.addAll(listQuotes)
+                val adapter  = AdapterViewQuotes(displayListQuotes)
+                rvQuotes.adapter = adapter
+                rvQuotes.layoutManager = LinearLayoutManager(context)
+                rvQuotes.setHasFixedSize(true)
+            }, {})
+        queue.add(stringRequest)
     }
 
 

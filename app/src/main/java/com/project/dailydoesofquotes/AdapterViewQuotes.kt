@@ -1,6 +1,7 @@
 package com.project.dailydoesofquotes
 
 import android.content.Intent
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ class AdapterViewQuotes(val listData : List<ListQuotes>) : RecyclerView.Adapter<
             val tvAuthor = findViewById<TextView>(R.id.textAuthor)
 
             val item = listData[position]
-            val quotes = item.quotes
+            val quotes = Html.fromHtml(item.quotes)
             tvNama.text = "\"$quotes\""
             tvAuthor.text = item.author
 

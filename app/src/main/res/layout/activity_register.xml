@@ -26,7 +26,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Resgiter"
+                android:text="Register"
                 android:textSize="18sp"
                 android:layout_gravity="center"
                 android:fontFamily="@font/montserrat_bold"
@@ -70,6 +70,7 @@
                 android:layout_marginTop="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
+                android:inputType="textPassword"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/bg_et_login"/>
@@ -90,11 +91,13 @@
                 android:layout_marginTop="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
+                android:inputType="textPassword"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:background="@drawable/bg_et_login"/>
 
             <Button
+                android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
@@ -104,6 +107,7 @@
                 android:layout_marginEnd="12dp"/>
 
             <TextView
+                android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"

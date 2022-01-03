@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="40dp"
+    tools:context=".EditProfile">
+
+
+        <TextView
+            android:id="@+id/usernameProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Username"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etNamaProfile"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_et_quotes"
+            android:hint="Nama"
+            android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/btnUbahPassword"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#3893FF"
+        android:text="Ubah Password" />
+
+
+        <EditText
+            android:id="@+id/etOldPassword"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:background="@drawable/bg_et_quotes"
+            android:hint="Password Lama"
+            android:textAlignment="center" />
+
+
+        <EditText
+            android:id="@+id/etNewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:background="@drawable/bg_et_quotes"
+            android:hint="Password Baru"
+            android:textAlignment="center" />
+    <Button
+        android:id="@+id/btnBatalUbah"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        android:backgroundTint="#D32F2F"
+        android:text="Batal Ubah Password" />
+
+
+        <Button
+            android:id="@+id/btnUbah"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="70dp"
+            android:backgroundTint="#3893FF"
+            android:text="Ubah" />
+
+
+
+</LinearLayout>

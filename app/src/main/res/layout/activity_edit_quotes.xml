@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="40dp"
+    tools:context=".EditQuotes">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Update Your Quotes"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        />
+
+    <EditText
+        android:id="@+id/etQuotesUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="112dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_et_quotes"
+        android:hint="Type Here...."
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/etAuthorUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_et_quotes"
+        android:hint="Insert Your Name"
+        android:textAlignment="center" />
+
+
+    <Button
+        android:id="@+id/btnDeleteQuotes"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="#D32F2F"
+        android:text="Delete" />
+    <Button
+        android:id="@+id/btnUpdateQuotes"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:backgroundTint="#3893FF"
+        android:text="Update" />
+
+</LinearLayout>
