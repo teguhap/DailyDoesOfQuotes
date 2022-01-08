@@ -1,6 +1,7 @@
 package com.project.dailydoesofquotes
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,29 +22,29 @@ import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
-
-
-
-
-
+    lateinit var loader : ProgressDialog
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val recyclerViewHome = view.findViewById<RecyclerView>(R.id.recycleViewQuotes)
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        loader = ProgressDialog(context)
+
 
          val listQuotes = ArrayList<ListQuotes>()
          val listDisplay = ArrayList<ListQuotes>()
 
-
-
+        loader.setCancelable(false)
+        loader.setTitle("Mohon Tunggu")
+        loader.show()
         getQuotes(listQuotes,listDisplay,recyclerViewHome)
 
 
         toolbar.setOnMenuItemClickListener {item->
             when(item.itemId){
                 R.id.refresh -> {
+                    loader.show()
                     listQuotes.clear()
                     listDisplay.clear()
                     getQuotes(listQuotes,listDisplay,recyclerViewHome)
@@ -126,6 +127,7 @@ class HomeFragment : Fragment() {
                 rvQuotes.adapter = adapter
                 rvQuotes.layoutManager = LinearLayoutManager(context)
                 rvQuotes.setHasFixedSize(true)
+                loader.dismiss()
             }, {})
         queue.add(stringRequest)
     }
@@ -160,6 +162,5 @@ class HomeFragment : Fragment() {
             }, {})
         queue.add(stringRequest)
     }
-
 
 }

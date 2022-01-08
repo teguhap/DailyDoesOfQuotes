@@ -1,5 +1,6 @@
 package com.project.dailydoesofquotes
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -22,6 +23,7 @@ import org.json.JSONObject
 import java.util.HashMap
 
 class EditProfile : AppCompatActivity() {
+    lateinit var loader : ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
@@ -36,6 +38,11 @@ class EditProfile : AppCompatActivity() {
         val setting: SharedPreferences = getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
         val username = setting.getString("username","")
 
+        loader = ProgressDialog(this)
+        loader.setCancelable(false)
+        loader.setTitle("Mohon Tunggu")
+        loader.show()
+
         getDataUser(username!!)
         tvUSername.text = username
 
@@ -44,12 +51,14 @@ class EditProfile : AppCompatActivity() {
             btnBatal.visibility = View.VISIBLE
             etOldPassword.visibility  =View.VISIBLE
             etNewPassword.visibility  =View.VISIBLE
+            etName.visibility  = View.GONE
         }
         btnBatal.setOnClickListener {
             btnUbahPassword.visibility = View.VISIBLE
             btnBatal.visibility = View.GONE
             etOldPassword.visibility  =View.GONE
             etNewPassword.visibility  =View.GONE
+            etName.visibility  = View.VISIBLE
         }
 
         btnUbahProfile.setOnClickListener {
@@ -59,9 +68,15 @@ class EditProfile : AppCompatActivity() {
 
             if( etName.text.isEmpty()){
               etName.error = "Nama Masih Kosong"
+            }else if(etOldPassword.text.isEmpty()|| etNewPassword.text.isEmpty()){
+                Toast.makeText(this,"Password Masih ada yang kosong",Toast.LENGTH_LONG).show()
             }else if(etOldPassword.text.isNotEmpty() && etNewPassword.text.isNotEmpty()){
+                loader.show()
                 ubahDataPassword(oldPassword,newPassword, username)
+                etNewPassword.setText("")
+                etOldPassword.setText("")
             }else{
+                loader.show()
                 ubahDataNama(nama, username)
             }
 
@@ -80,7 +95,12 @@ class EditProfile : AppCompatActivity() {
                 try{
                     val obj = JSONObject(response)
                     Log.i("hasil",obj.getString("message"))
-                    Toast.makeText(this,"Nama Berhasil Diubah",Toast.LENGTH_SHORT).show()
+                    if(obj.getString("message") == "Perubahan berhasil."){
+                        Toast.makeText(this,"Nama Berhasil Diubah",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this,"Sepertinya ada yang salah,yuk coba lagi",Toast.LENGTH_SHORT).show()
+                    }
+                    loader.dismiss()
                 }catch(e: JSONException){
                     e.printStackTrace()
                 }
@@ -112,6 +132,12 @@ class EditProfile : AppCompatActivity() {
                 try{
                     val obj = JSONObject(response)
                     Log.i("hasil",obj.getString("message"))
+                    if(obj.getString("message") == "Perubahan berhasil."){
+                        Toast.makeText(this,"Password Berhasil Diubah",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this,obj.getString("message"),Toast.LENGTH_SHORT).show()
+                    }
+                    loader.dismiss()
                 }catch(e: JSONException){
                     e.printStackTrace()
                 }
@@ -144,6 +170,7 @@ class EditProfile : AppCompatActivity() {
                 val jsonObject = JSONObject(strRespon)
                 val name = jsonObject.getJSONObject("data").getString("full_name")
                 etName.setText(name)
+                loader.dismiss()
             }, {})
         queue.add(stringRequest)
     }

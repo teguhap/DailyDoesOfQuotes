@@ -1,16 +1,14 @@
 package com.project.dailydoesofquotes
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -21,6 +19,7 @@ import org.json.JSONObject
 import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
+    lateinit var loader : ProgressDialog
 
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
         val etPassword = findViewById<EditText>(R.id.etPasswordLogin)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val tvRegister = findViewById<TextView>(R.id.tvRegister)
+        loader = ProgressDialog(this)
 
 
         btnLogin.setOnClickListener {
@@ -41,6 +41,10 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 val username = etUser.text.toString()
                 val password = etPassword.text.toString()
+
+                loader.setTitle("Mohon tunggu")
+                loader.setCancelable(false)
+                loader.show()
 
                getDataLogin(username,password)
 
@@ -63,23 +67,24 @@ class LoginActivity : AppCompatActivity() {
         val url = "https://bod-thinker.000webhostapp.com/api/user?action=login&username=$username&password=$password"
         val setting: SharedPreferences = getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
         val editor = setting.edit()
-
         val stringRequest = StringRequest(
             Request.Method.GET,url,
             { response ->
-                val strRespon = response.toString()
-                val jsonObject = JSONObject(strRespon)
-                val data = jsonObject.getJSONObject("data").getString("username")
 
-                    if(data == username){
+                val strResponse = response.toString()
+                val message = JSONObject(strResponse).get("message").toString()
+                Log.d("HasilUser",message)
+                    if(message == "Login success" ){
                         editor.putString("username",username)
                         editor.apply()
                         Intent(this,ActivityUtama :: class.java).also {
                             startActivity(it)
                             finish()
                         }
+                        loader.dismiss()
                     }else{
-                        Toast.makeText(this,"Usenarme atau Password tidak valid",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"Username atau Password tidak valid",Toast.LENGTH_SHORT).show()
+                        loader.dismiss()
                     }
             }, {})
         queue.add(stringRequest)

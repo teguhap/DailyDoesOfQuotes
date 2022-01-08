@@ -1,6 +1,7 @@
 package com.project.dailydoesofquotes
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -55,13 +56,16 @@ class ProfileFragment : Fragment() {
         }
 
         btnLogout.setOnClickListener {
-           edit?.clear()
+            edit?.clear()
             edit?.apply()
-            Toast.makeText(context,"Logout Berhasil",Toast.LENGTH_SHORT).show()
             if(username.isNullOrEmpty()){
                 llProfile.visibility = View.GONE
                 llRegist.visibility = View.VISIBLE
             }
+            val intent = Intent(context,ActivityUtama::class.java)
+            startActivity(intent)
+            Toast.makeText(context,"Logout Berhasil",Toast.LENGTH_SHORT).show()
+
         }
 
         return view
