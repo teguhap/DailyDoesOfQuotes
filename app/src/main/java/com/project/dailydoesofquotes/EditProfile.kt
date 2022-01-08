@@ -68,14 +68,12 @@ class EditProfile : AppCompatActivity() {
 
             if( etName.text.isEmpty()){
               etName.error = "Nama Masih Kosong"
-            }else if(etOldPassword.text.isEmpty()|| etNewPassword.text.isEmpty()){
-                Toast.makeText(this,"Password Masih ada yang kosong",Toast.LENGTH_LONG).show()
             }else if(etOldPassword.text.isNotEmpty() && etNewPassword.text.isNotEmpty()){
                 loader.show()
                 ubahDataPassword(oldPassword,newPassword, username)
                 etNewPassword.setText("")
                 etOldPassword.setText("")
-            }else{
+            }else {
                 loader.show()
                 ubahDataNama(nama, username)
             }

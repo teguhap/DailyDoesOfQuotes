@@ -1,5 +1,6 @@
 package com.project.dailydoesofquotes
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -19,6 +21,7 @@ import org.json.JSONObject
 import java.util.HashMap
 
 class EditQuotes : AppCompatActivity() {
+    lateinit var loader : ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_quotes)
@@ -37,11 +40,17 @@ class EditQuotes : AppCompatActivity() {
         etQuote.setText(quote)
         etAuthor.setText(author)
 
+        loader = ProgressDialog(this)
+        loader.setCancelable(false)
+        loader.setTitle("Mohon Tunggu")
+
         btnDelete.setOnClickListener {
+            loader.show()
             deleteQuote(username!!,id!!)
         }
 
         btnUpdate.setOnClickListener {
+            loader.show()
             val quoteBaru = etQuote.text.toString()
             val authorBaru = etAuthor.text.toString()
             updateQuote(username!!,id!!,authorBaru,quoteBaru)
@@ -58,10 +67,15 @@ class EditQuotes : AppCompatActivity() {
                 try{
                     val obj = JSONObject(response)
                     Log.i("hasil",obj.getString("message"))
-                    Toast.makeText(this,"Quote berhasil di delete", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this,MyQuotes :: class.java)
-                    startActivity(intent)
-                    finish()
+                    if(obj.getString("message") == obj.getString("message")){
+                        Toast.makeText(this,"Quote berhasil di delete", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this,MyQuotes :: class.java)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        Toast.makeText(this,"Sepertinya ada yang salah,yuk coba lagi",Toast.LENGTH_SHORT).show()
+                    }
+                    loader.dismiss()
                 }catch(e: JSONException){
                     e.printStackTrace()
                 }
@@ -92,11 +106,15 @@ class EditQuotes : AppCompatActivity() {
             Response.Listener<String>{ response ->
                 try{
                     val obj = JSONObject(response)
-                    Log.i("hasil",obj.getString("message"))
-                    Toast.makeText(this,"Quote berhasil di Update", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this,MyQuotes :: class.java)
-                    startActivity(intent)
-                    finish()
+                    if(obj.getString("message") == obj.getString("message")){
+                        Toast.makeText(this,"Quote berhasil di update", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this,MyQuotes :: class.java)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        Toast.makeText(this,"Sepertinya ada yang salah,yuk coba lagi",Toast.LENGTH_SHORT).show()
+                    }
+                    loader.dismiss()
                 }catch(e: JSONException){
                     e.printStackTrace()
                 }

@@ -1,14 +1,16 @@
 package com.project.dailydoesofquotes
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.SearchView
-import android.widget.Toast
-import android.widget.Toolbar
+import android.view.View
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -20,6 +22,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MyQuotes : AppCompatActivity() {
+    lateinit var loader : ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_quotes)
@@ -28,12 +31,43 @@ class MyQuotes : AppCompatActivity() {
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarMyquotes)
         val setting: SharedPreferences = getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
         val username = setting.getString("username","")
+        val llNoInternet = findViewById<LinearLayout>(R.id.llNoInternetMyQuotes)
+        val btnRefresh  = findViewById<Button>(R.id.btnRefreshMyQuotes)
+
+
+        loader = ProgressDialog(this)
+
 
         val listQuotes = ArrayList<ListQuotes>()
         val listDisplay = ArrayList<ListQuotes>()
 
 
-      getQuotes(username!!,listQuotes,listDisplay,rvMyQuotes)
+        loader.setCancelable(false)
+        loader.setTitle("Mohon Tunggu")
+        loader.show()
+
+        isOnline()
+        if(isOnline()){
+            llNoInternet.visibility = View.GONE
+            rvMyQuotes.visibility = View.VISIBLE
+            getQuotes(username!!,listQuotes,listDisplay, rvMyQuotes)
+        }else{
+            llNoInternet.visibility = View.VISIBLE
+            rvMyQuotes.visibility = View.GONE
+        }
+
+        btnRefresh.setOnClickListener {
+            loader.show()
+            isOnline()
+            if(isOnline()){
+                llNoInternet.visibility = View.GONE
+                rvMyQuotes.visibility = View.VISIBLE
+                getQuotes(username!!,listQuotes,listDisplay, rvMyQuotes)
+            }else{
+                llNoInternet.visibility = View.VISIBLE
+                rvMyQuotes.visibility = View.GONE
+            }
+        }
 
         toolbar.setOnMenuItemClickListener {item->
             when(item.itemId){
@@ -107,7 +141,32 @@ class MyQuotes : AppCompatActivity() {
                 rvQuotes.adapter = adapter
                 rvQuotes.layoutManager = LinearLayoutManager(this)
                 rvQuotes.setHasFixedSize(true)
+                loader.dismiss()
             }, {})
         queue.add(stringRequest)
     }
+
+
+
+    fun isOnline(): Boolean {
+        val connectivityManager =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                return true
+            }
+        }
+        loader.dismiss()
+        return false
+    }
+
 }
