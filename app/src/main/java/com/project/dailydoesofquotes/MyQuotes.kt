@@ -32,6 +32,7 @@ class MyQuotes : AppCompatActivity() {
         val setting: SharedPreferences = getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
         val username = setting.getString("username","")
         val llNoInternet = findViewById<LinearLayout>(R.id.llNoInternetMyQuotes)
+        val llNoQuotes = findViewById<LinearLayout>(R.id.llMyQuotesIsEmpty)
         val btnRefresh  = findViewById<Button>(R.id.btnRefreshMyQuotes)
 
 
@@ -51,6 +52,7 @@ class MyQuotes : AppCompatActivity() {
             llNoInternet.visibility = View.GONE
             rvMyQuotes.visibility = View.VISIBLE
             getQuotes(username!!,listQuotes,listDisplay, rvMyQuotes)
+
         }else{
             llNoInternet.visibility = View.VISIBLE
             rvMyQuotes.visibility = View.GONE
@@ -118,6 +120,9 @@ class MyQuotes : AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
         val url = "https://bod-thinker.000webhostapp.com/api/quotes?action=get-mine&username=$username"
 
+        val rvMyQuotes = findViewById<RecyclerView>(R.id.recycleViewMyQuotes)
+        val llNoQuotes = findViewById<LinearLayout>(R.id.llMyQuotesIsEmpty)
+
         val stringRequest = StringRequest(
             Request.Method.GET,url,
             {
@@ -137,6 +142,11 @@ class MyQuotes : AppCompatActivity() {
                 }
 
                 displayListQuotes.addAll(listQuotes)
+
+                if(listQuotes.isEmpty()){
+                    llNoQuotes.visibility = View.VISIBLE
+                    rvMyQuotes.visibility = View.GONE
+                }
                 val adapter  = AdapterViewMyQuotes(displayListQuotes)
                 rvQuotes.adapter = adapter
                 rvQuotes.layoutManager = LinearLayoutManager(this)

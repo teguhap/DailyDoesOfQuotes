@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Selly Nursyifa/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/layout/activity_my_quotes.xml" value="0.25" />
+        <entry key="..\:/Users/Selly Nursyifa/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Selly Nursyifa/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/layout/activity_my_quotes.xml" value="0.264" />
+        <entry key="..\:/Users/Selly Nursyifa/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/layout/activity_utama.xml" value="0.25" />
         <entry key="..\:/Users/Selly Nursyifa/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Users/Selly Nursyifa/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/layout/view_card_myquotes.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/drawable/bg_et_login.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/drawable/bg_et_quotes.xml" value="0.10092592592592593" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/DailyDoesOfQuotes/app/src/main/res/drawable/ic_refresh.xml" value="0.19583333333333333" />

@@ -13,9 +13,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val tvLogo = findViewById<TextView>(R.id.tvLogo)
-
-        tvLogo.text = "\"Q"
 
         val intent = Intent(this,ActivityUtama:: class.java)
         Handler().postDelayed({startActivity(intent)
