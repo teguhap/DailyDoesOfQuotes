@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.math.log
@@ -25,8 +26,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        val etUser = findViewById<EditText>(R.id.etUsernameLogin)
-        val etPassword = findViewById<EditText>(R.id.etPasswordLogin)
+        val etUser = findViewById<TextInputEditText>(R.id.etUsernameLogin)
+        val etPassword = findViewById<TextInputEditText>(R.id.etPasswordLogin)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val tvRegister = findViewById<TextView>(R.id.tvRegister)
         loader = ProgressDialog(this)
@@ -34,9 +35,9 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin.setOnClickListener {
 
-            if(etUser.text.isEmpty()){
+            if(etUser.text?.isEmpty() == true){
                 etUser.error = "Username Requiered"
-            }else if(etPassword.text.isEmpty()){
+            }else if(etPassword.text?.isEmpty() == true){
                 etPassword.error = "Password Required"
             }else{
                 val username = etUser.text.toString()

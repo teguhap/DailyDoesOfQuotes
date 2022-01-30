@@ -42,16 +42,25 @@
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/white"/>
-            <EditText
-                android:id="@+id/etUsernameLogin"
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginTop="4dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_et_login"/>
+                android:layout_gravity="center">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUsernameLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_et_login"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
 
 
@@ -64,17 +73,25 @@
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/white"/>
-            <EditText
-                android:id="@+id/etPasswordLogin"
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
-                android:layout_marginTop="4dp"
                 android:layout_marginStart="12dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:inputType="textPassword"
                 android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_et_login"/>
+                android:layout_gravity="center"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPasswordLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_et_login"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btnLogin"
