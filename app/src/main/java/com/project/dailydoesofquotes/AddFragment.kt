@@ -1,5 +1,6 @@
 package com.project.dailydoesofquotes
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -24,6 +25,7 @@ import kotlin.collections.ArrayList
 
 
 class AddFragment : Fragment() {
+    lateinit var loader : ProgressDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -35,6 +37,7 @@ class AddFragment : Fragment() {
         val llRegist = view.findViewById<LinearLayout>(R.id.llRegistAdd)
         val llAdd = view.findViewById<LinearLayout>(R.id.llMakeQuotes)
         val setting = this.activity?.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
+        loader = ProgressDialog(context)
 
         val statusLogin = setting?.getString("username","")
         if(statusLogin.isNullOrEmpty()){
@@ -49,6 +52,9 @@ class AddFragment : Fragment() {
         }
 
         btnPost.setOnClickListener {
+            loader.setTitle("Tunggu Sebentar Ya")
+            loader.show()
+            loader.setCancelable(false)
             if(etQuotes.text.isEmpty()){
                 etQuotes.error = "Kata-katanya masih kosong nih"
             }else if(etName.text.isEmpty()){
@@ -58,10 +64,8 @@ class AddFragment : Fragment() {
                 val nama = etName.text.toString()
 
                 addQuote(quote, nama,statusLogin)
-
                 etQuotes.setText("")
                 etName.setText("")
-
             }
 
         }
@@ -87,7 +91,12 @@ class AddFragment : Fragment() {
                 try{
                     val obj = JSONObject(response)
                     Log.i("hasil",obj.getString("message"))
-                    Toast.makeText(context,"Quote Berhasil Ditambahkan",Toast.LENGTH_SHORT).show()
+                    if(obj.getString("message") == "Quote berhasil ditambahkan."){
+                        Toast.makeText(context,"Quote Berhasil Ditambahkan",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(context,"Sepertinya ada yang salah,yuk coba lagi",Toast.LENGTH_SHORT).show()
+                    }
+                    loader.dismiss()
                 }catch(e: JSONException){
                     e.printStackTrace()
                 }

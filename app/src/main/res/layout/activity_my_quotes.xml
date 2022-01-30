@@ -11,14 +11,14 @@
         android:id="@+id/toolbarMyquotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="MyQuotes"
         android:background="@color/white"
-        app:titleTextColor="@color/black"
-        app:menu="@menu/menu_myquotesbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu_myquotesbar"
+        app:title="MyQuotes"
+        app:titleTextColor="@color/black" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -30,5 +30,70 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarMyquotes" />
+
+    <LinearLayout
+        android:id="@+id/llNoInternetMyQuotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMyquotes">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/ic_connection"
+            android:contentDescription="@string/imaga_lost_connection" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text= "@string/check_your_internet"
+            android:fontFamily="@font/montserrat_bold"/>
+        <Button
+            android:id="@+id/btnRefreshMyQuotes"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="12dp"
+            android:text="Refresh"
+            android:fontFamily="@font/montserrat_bold"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMyQuotesIsEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMyquotes">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/ic_no_results_found"
+            android:contentDescription="@string/imaga_lost_connection" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text= "Kamu belum punya quote"
+            android:fontFamily="@font/montserrat_bold"/>
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

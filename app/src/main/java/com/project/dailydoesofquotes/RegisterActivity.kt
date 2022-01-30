@@ -1,5 +1,6 @@
 package com.project.dailydoesofquotes
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -20,6 +21,7 @@ import org.json.JSONObject
 import java.util.HashMap
 
 class RegisterActivity : AppCompatActivity() {
+    lateinit var loader : ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -29,18 +31,25 @@ class RegisterActivity : AppCompatActivity() {
         val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
         val btnRegist = findViewById<Button>(R.id.btnRegister)
         val tvLogin= findViewById<TextView>(R.id.tvLogin)
+        loader = ProgressDialog(this)
 
 
         btnRegist.setOnClickListener {
+
+
 
             if(etUser.text.isEmpty()){
                 etUser.error = "Username Requiered"
             }else if(etPassword.text.isEmpty()){
                 etPassword.error = "Password Required"
+            }else if(etConfirmPassword.text.toString() != etPassword.text.toString()){
+                etConfirmPassword.error = "Password Not Same"
             }else{
+                loader.setTitle("Mohon tunggu")
+                loader.setCancelable(false)
+                loader.show()
                 val username = etUser.text.toString()
                 val password = etPassword.text.toString()
-
                 registerAccount(username,password)
 
             }
@@ -64,12 +73,18 @@ class RegisterActivity : AppCompatActivity() {
             Response.Listener<String>{ response ->
                 try{
                     val obj = JSONObject(response)
-                    Log.i("hasil",obj.getString("message"))
-                    Toast.makeText(this,"Registrasi Berhasil,Silahkan Login",Toast.LENGTH_SHORT).show()
-                    Intent(this,LoginActivity :: class.java).also {
-                        startActivity(it)
-                        finish()
+                    val message = obj.getString("message")
+                    Log.i("hasil",message)
+                    if(message == "Register berhasil."){
+                        Intent(this,LoginActivity :: class.java).also {
+                            startActivity(it)
+                            finish()
+                        }
+                        Toast.makeText(this,"Registrasi Berhasil,Silahkan Login",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
                     }
+                    loader.dismiss()
                 }catch(e: JSONException){
                     e.printStackTrace()
                 }
