@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Yuk Regist Dulu"
+                android:text="Login dulu yuk"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
@@ -49,7 +49,7 @@
                 android:layout_height="64dp"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#3893FF"
-                android:text="Regist" />
+                android:text="Login" />
 
         </LinearLayout>
 

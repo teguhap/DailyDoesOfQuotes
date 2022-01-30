@@ -1,6 +1,8 @@
 package com.project.dailydoesofquotes
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -38,7 +40,7 @@ class ProfileFragment : Fragment() {
         }
 
         btnRegist.setOnClickListener {
-            Intent(context,RegisterActivity :: class.java).also {
+            Intent(context,LoginActivity :: class.java).also {
                 startActivity(it)
             }
         }
@@ -56,15 +58,25 @@ class ProfileFragment : Fragment() {
         }
 
         btnLogout.setOnClickListener {
-            edit?.clear()
-            edit?.apply()
-            if(username.isNullOrEmpty()){
-                llProfile.visibility = View.GONE
-                llRegist.visibility = View.VISIBLE
+            val dialog = AlertDialog.Builder(context)
+            dialog.setIcon(R.drawable.logoapp)
+            dialog.setTitle("Anda yakin ingin logout?")
+            dialog.setNegativeButton("No"){_,_->
+
             }
-            val intent = Intent(context,ActivityUtama::class.java)
-            startActivity(intent)
-            Toast.makeText(context,"Logout Berhasil",Toast.LENGTH_SHORT).show()
+            dialog.setPositiveButton("Yes"){_,_->
+                edit?.clear()
+                edit?.apply()
+                if(username.isNullOrEmpty()){
+                    llProfile.visibility = View.GONE
+                    llRegist.visibility = View.VISIBLE
+                }
+                val intent = Intent(context,ActivityUtama::class.java)
+                startActivity(intent)
+                Toast.makeText(context,"Logout Berhasil",Toast.LENGTH_SHORT).show()
+            }
+            dialog.create().show()
+
 
         }
 

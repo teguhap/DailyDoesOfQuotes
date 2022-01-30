@@ -52,12 +52,13 @@ class LoginActivity : AppCompatActivity() {
 
             }
 
+
+    }
         tvRegister.setOnClickListener {
             Intent(this,RegisterActivity :: class.java).also {
                 startActivity(it)
             }
         }
-    }
 
     }
 

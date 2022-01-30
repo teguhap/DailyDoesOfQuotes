@@ -46,7 +46,7 @@ class AddFragment : Fragment() {
         }
 
         btnRegist.setOnClickListener {
-            Intent(context,RegisterActivity :: class.java).also {
+            Intent(context,LoginActivity :: class.java).also {
                 startActivity(it)
             }
         }

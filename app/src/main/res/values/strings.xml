@@ -7,4 +7,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="imaga_lost_connection">Imaga Lost Connection</string>
     <string name="check_your_internet">Check Your Internet</string>
+    <string name="register"> <u>Register</u> </string>
+    <string name="login"> <u>Login</u> </string>
 </resources>
