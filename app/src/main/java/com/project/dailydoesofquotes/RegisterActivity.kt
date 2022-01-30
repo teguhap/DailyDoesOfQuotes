@@ -16,6 +16,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
+import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.HashMap
@@ -26,9 +27,9 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val etUser = findViewById<EditText>(R.id.etUsernameDaftar)
-        val etPassword = findViewById<EditText>(R.id.etPasswordDaftar)
-        val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
+        val etUser = findViewById<TextInputEditText>(R.id.etUsernameDaftar)
+        val etPassword = findViewById<TextInputEditText>(R.id.etPasswordDaftar)
+        val etConfirmPassword = findViewById<TextInputEditText>(R.id.etConfirmPassword)
         val btnRegist = findViewById<Button>(R.id.btnRegister)
         val tvLogin= findViewById<TextView>(R.id.tvLogin)
         loader = ProgressDialog(this)
@@ -38,9 +39,9 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
-            if(etUser.text.isEmpty()){
+            if(etUser.text?.isEmpty() == true){
                 etUser.error = "Username Requiered"
-            }else if(etPassword.text.isEmpty()){
+            }else if(etPassword.text?.isEmpty() == true){
                 etPassword.error = "Password Required"
             }else if(etConfirmPassword.text.toString() != etPassword.text.toString()){
                 etConfirmPassword.error = "Password Not Same"
