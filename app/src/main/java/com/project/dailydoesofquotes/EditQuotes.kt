@@ -1,5 +1,6 @@
 package com.project.dailydoesofquotes
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -45,15 +46,37 @@ class EditQuotes : AppCompatActivity() {
         loader.setTitle("Mohon Tunggu")
 
         btnDelete.setOnClickListener {
-            loader.show()
-            deleteQuote(username!!,id!!)
+            val dialog = AlertDialog.Builder(this)
+            dialog.setIcon(R.drawable.logoapp)
+            dialog.setTitle("Quote ini akan dihapus")
+
+            dialog.setNegativeButton("No"){_,_->
+
+            }
+            dialog.setPositiveButton("Yes"){_,_->
+                loader.show()
+                deleteQuote(username!!,id!!)
+            }
+            dialog.create().show()
+
         }
 
         btnUpdate.setOnClickListener {
-            loader.show()
-            val quoteBaru = etQuote.text.toString()
-            val authorBaru = etAuthor.text.toString()
-            updateQuote(username!!,id!!,authorBaru,quoteBaru)
+            val dialog = AlertDialog.Builder(this)
+            dialog.setIcon(R.drawable.logoapp)
+            dialog.setTitle("Quote ini akan diubah")
+
+            dialog.setNegativeButton("No"){_,_->
+
+            }
+            dialog.setPositiveButton("Yes"){_,_->
+                loader.show()
+                val quoteBaru = etQuote.text.toString()
+                val authorBaru = etAuthor.text.toString()
+                updateQuote(username!!,id!!,authorBaru,quoteBaru)
+            }
+            dialog.create().show()
+
         }
     }
 
