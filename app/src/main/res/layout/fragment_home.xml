@@ -25,49 +25,81 @@
             app:title="Home"
             app:titleTextColor="@color/black" />
 
+
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmmerFrame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:shimmer_auto_start="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:shimmer_auto_start="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
-                <include layout="@layout/shimmer_layout"/>
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <include layout="@layout/shimmer_layout" />
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/swiperHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="726dp">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycleViewQuotes"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp" />
+                        </LinearLayout>
+                    </ScrollView>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             </LinearLayout>
 
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleViewQuotes"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.491"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <LinearLayout
             android:id="@+id/llNoInternetHome"

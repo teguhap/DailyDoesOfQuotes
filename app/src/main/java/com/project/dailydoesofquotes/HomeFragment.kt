@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -36,6 +37,7 @@ class HomeFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         val llNoInternet = view.findViewById<LinearLayout>(R.id.llNoInternetHome)
         val btnRefresh  = view.findViewById<Button>(R.id.btnRefreshHome)
+        val swiper = view.findViewById<SwipeRefreshLayout>(R.id.swiperHome)
         shimmer = view.findViewById(R.id.shimmmerFrame)
 
 
@@ -69,27 +71,28 @@ class HomeFragment : Fragment() {
                 recyclerViewHome.visibility = View.GONE
             }
         }
+        swiper.setOnRefreshListener {
+            recyclerViewHome.visibility = View.GONE
+            shimmer.startShimmer()
+            shimmer.visibility = View.VISIBLE
+            listQuotes.clear()
+            listDisplay.clear()
+            isOnline()
+            if(isOnline()){
+                llNoInternet.visibility = View.GONE
+                recyclerViewHome.visibility = View.VISIBLE
+                getQuotes(listQuotes,listDisplay,recyclerViewHome)
+            }else{
+                shimmer.stopShimmer()
+                shimmer.visibility = View.GONE
+                llNoInternet.visibility = View.VISIBLE
+                recyclerViewHome.visibility = View.GONE
+            }
+            swiper.isRefreshing = false
+        }
 
         toolbar.setOnMenuItemClickListener {item->
             when(item.itemId){
-                R.id.refresh -> {
-                    shimmer.startShimmer()
-                    shimmer.visibility = View.VISIBLE
-                    listQuotes.clear()
-                    listDisplay.clear()
-                    isOnline()
-                    if(isOnline()){
-                        llNoInternet.visibility = View.GONE
-                        recyclerViewHome.visibility = View.VISIBLE
-                        getQuotes(listQuotes,listDisplay,recyclerViewHome)
-                    }else{
-                        shimmer.stopShimmer()
-                        shimmer.visibility = View.GONE
-                        llNoInternet.visibility = View.VISIBLE
-                        recyclerViewHome.visibility = View.GONE
-                    }
-                    true
-                }
                 R.id.search -> {
                     val searchView  = SearchView(context)
                     searchView.queryHint = "Search"
@@ -140,6 +143,8 @@ class HomeFragment : Fragment() {
                 else -> false
             }
         }
+
+
         return view
     }
 
