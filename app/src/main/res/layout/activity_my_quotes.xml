@@ -20,11 +20,44 @@
         app:title="MyQuotes"
         app:titleTextColor="@color/black" />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmmerFrameMyQuotes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:shimmer_auto_start="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMyquotes">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+            <include layout="@layout/shimmer_layout"/>
+        </LinearLayout>
+
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewMyQuotes"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"

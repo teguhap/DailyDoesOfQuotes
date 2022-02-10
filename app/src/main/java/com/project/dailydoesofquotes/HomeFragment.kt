@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.facebook.shimmer.ShimmerFrameLayout
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -25,7 +26,8 @@ import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
-    lateinit var loader : ProgressDialog
+    lateinit var shimmer : ShimmerFrameLayout
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -34,15 +36,13 @@ class HomeFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         val llNoInternet = view.findViewById<LinearLayout>(R.id.llNoInternetHome)
         val btnRefresh  = view.findViewById<Button>(R.id.btnRefreshHome)
-        loader = ProgressDialog(context)
+        shimmer = view.findViewById(R.id.shimmmerFrame)
+
 
 
          val listQuotes = ArrayList<ListQuotes>()
          val listDisplay = ArrayList<ListQuotes>()
 
-        loader.setCancelable(false)
-        loader.setTitle("Mohon Tunggu")
-        loader.show()
 
         isOnline()
         if(isOnline()){
@@ -50,12 +50,15 @@ class HomeFragment : Fragment() {
             recyclerViewHome.visibility = View.VISIBLE
             getQuotes(listQuotes,listDisplay,recyclerViewHome)
         }else{
+            shimmer.stopShimmer()
+            shimmer.visibility = View.GONE
             llNoInternet.visibility = View.VISIBLE
             recyclerViewHome.visibility = View.GONE
         }
 
         btnRefresh.setOnClickListener {
-            loader.show()
+            shimmer.startShimmer()
+            shimmer.visibility = View.VISIBLE
             isOnline()
             if(isOnline()){
                 llNoInternet.visibility = View.GONE
@@ -70,7 +73,8 @@ class HomeFragment : Fragment() {
         toolbar.setOnMenuItemClickListener {item->
             when(item.itemId){
                 R.id.refresh -> {
-                    loader.show()
+                    shimmer.startShimmer()
+                    shimmer.visibility = View.VISIBLE
                     listQuotes.clear()
                     listDisplay.clear()
                     isOnline()
@@ -79,6 +83,8 @@ class HomeFragment : Fragment() {
                         recyclerViewHome.visibility = View.VISIBLE
                         getQuotes(listQuotes,listDisplay,recyclerViewHome)
                     }else{
+                        shimmer.stopShimmer()
+                        shimmer.visibility = View.GONE
                         llNoInternet.visibility = View.VISIBLE
                         recyclerViewHome.visibility = View.GONE
                     }
@@ -90,6 +96,8 @@ class HomeFragment : Fragment() {
                     searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                         @SuppressLint("NotifyDataSetChanged")
                         override fun onQueryTextSubmit(query: String?): Boolean {
+                            shimmer.startShimmer()
+                            shimmer.visibility = View.VISIBLE
                             listDisplay.clear()
                             val search = query?.lowercase(Locale.getDefault())
                             if (search != null) {
@@ -101,6 +109,8 @@ class HomeFragment : Fragment() {
 
                         @SuppressLint("NotifyDataSetChanged")
                         override fun onQueryTextChange(newText: String?): Boolean {
+                            shimmer.startShimmer()
+                            shimmer.visibility = View.VISIBLE
                             if(newText!!.isNotEmpty()){
                                 listDisplay.clear()
                                 val search = newText.lowercase(Locale.getDefault())
@@ -161,7 +171,8 @@ class HomeFragment : Fragment() {
                 rvQuotes.adapter = adapter
                 rvQuotes.layoutManager = LinearLayoutManager(context)
                 rvQuotes.setHasFixedSize(true)
-                loader.dismiss()
+                shimmer.stopShimmer()
+                shimmer.visibility = View.GONE
             }, {})
         queue.add(stringRequest)
     }
@@ -193,6 +204,8 @@ class HomeFragment : Fragment() {
                 rvQuotes.adapter = adapter
                 rvQuotes.layoutManager = LinearLayoutManager(context)
                 rvQuotes.setHasFixedSize(true)
+                shimmer.stopShimmer()
+                shimmer.visibility = View.GONE
             }, {})
         queue.add(stringRequest)
     }
@@ -215,7 +228,8 @@ class HomeFragment : Fragment() {
                 return true
             }
         }
-        loader.dismiss()
+        shimmer.stopShimmer()
+        shimmer.visibility = View.GONE
         return false
     }
 

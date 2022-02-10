@@ -16,13 +16,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.facebook.shimmer.ShimmerFrameLayout
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
 class MyQuotes : AppCompatActivity() {
-    lateinit var loader : ProgressDialog
+
+    lateinit var shimmer : ShimmerFrameLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_quotes)
@@ -32,20 +34,16 @@ class MyQuotes : AppCompatActivity() {
         val setting: SharedPreferences = getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
         val username = setting.getString("username","")
         val llNoInternet = findViewById<LinearLayout>(R.id.llNoInternetMyQuotes)
-        val llNoQuotes = findViewById<LinearLayout>(R.id.llMyQuotesIsEmpty)
         val btnRefresh  = findViewById<Button>(R.id.btnRefreshMyQuotes)
+        shimmer = findViewById(R.id.shimmmerFrameMyQuotes)
 
 
-        loader = ProgressDialog(this)
 
 
         val listQuotes = ArrayList<ListQuotes>()
         val listDisplay = ArrayList<ListQuotes>()
 
 
-        loader.setCancelable(false)
-        loader.setTitle("Mohon Tunggu")
-        loader.show()
 
         isOnline()
         if(isOnline()){
@@ -54,12 +52,15 @@ class MyQuotes : AppCompatActivity() {
             getQuotes(username!!,listQuotes,listDisplay, rvMyQuotes)
 
         }else{
+            shimmer.stopShimmer()
+            shimmer.visibility = View.GONE
             llNoInternet.visibility = View.VISIBLE
             rvMyQuotes.visibility = View.GONE
         }
 
         btnRefresh.setOnClickListener {
-            loader.show()
+            shimmer.startShimmer()
+            shimmer.visibility = View.VISIBLE
             isOnline()
             if(isOnline()){
                 llNoInternet.visibility = View.GONE
@@ -151,7 +152,8 @@ class MyQuotes : AppCompatActivity() {
                 rvQuotes.adapter = adapter
                 rvQuotes.layoutManager = LinearLayoutManager(this)
                 rvQuotes.setHasFixedSize(true)
-                loader.dismiss()
+                shimmer.stopShimmer()
+                shimmer.visibility = View.GONE
             }, {})
         queue.add(stringRequest)
     }
@@ -175,7 +177,8 @@ class MyQuotes : AppCompatActivity() {
                 return true
             }
         }
-        loader.dismiss()
+        shimmer.stopShimmer()
+        shimmer.visibility = View.GONE
         return false
     }
 
