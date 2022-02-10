@@ -25,10 +25,12 @@ import kotlin.collections.ArrayList
 
 
 class AddFragment : Fragment() {
+
     lateinit var loader : ProgressDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
+
         val view = inflater.inflate(R.layout.fragment_add, container, false)
         val etQuotes = view.findViewById<EditText>(R.id.etQuotes)
         val etName = view.findViewById<EditText>(R.id.etName)
@@ -36,6 +38,7 @@ class AddFragment : Fragment() {
         val btnRegist = view.findViewById<Button>(R.id.btnRegistAdd)
         val llRegist = view.findViewById<LinearLayout>(R.id.llRegistAdd)
         val llAdd = view.findViewById<LinearLayout>(R.id.llMakeQuotes)
+
         val setting = this.activity?.getSharedPreferences("LoginStatus", Context.MODE_PRIVATE)
         loader = ProgressDialog(context)
 
@@ -52,14 +55,16 @@ class AddFragment : Fragment() {
         }
 
         btnPost.setOnClickListener {
-            loader.setTitle("Tunggu Sebentar Ya")
-            loader.show()
-            loader.setCancelable(false)
+
             if(etQuotes.text.isEmpty()){
                 etQuotes.error = "Kata-katanya masih kosong nih"
             }else if(etName.text.isEmpty()){
                 etName.error = "Namamu masih kosong"
             }else{
+                loader.setTitle("Tunggu Sebentar Ya")
+                loader.show()
+                loader.setCancelable(false)
+
                 val quote = etQuotes.text.toString()
                 val nama = etName.text.toString()
 

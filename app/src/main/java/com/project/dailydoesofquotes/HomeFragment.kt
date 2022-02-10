@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
+
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val recyclerViewHome = view.findViewById<RecyclerView>(R.id.recycleViewQuotes)
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)

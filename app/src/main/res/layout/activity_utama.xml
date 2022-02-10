@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ActivityUtama">
 
+
+
     <FrameLayout
         android:id="@+id/frameLayoutUtama"
         android:layout_width="match_parent"
@@ -21,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#3893FF"
-        app:itemIconTint="@color/white"
         app:itemIconSize="30dp"
+        app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
